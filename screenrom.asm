@@ -508,8 +508,8 @@ endif
     bcs ca4e4
     cmp #&20
     bcs ca4e6
-.ca4e4
-    lda #&20
+.ca4e4                     ; character out of range
+    lda #&7e               ; redefine the lttle used ~ character (was space)
 .ca4e6
     jsr sub_ca977
     lda l00e0
