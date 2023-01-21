@@ -1,19 +1,23 @@
+INCLUDE_ATM_HDR =? 1
+
+zp = &0088
+
 ; Memory locations
 l0003                           = &0003
 l0005                           = &0005
-l0080                           = &0080
-l0081                           = &0081
-l0082                           = &0082
-l0083                           = &0083
-l0084                           = &0084
-l0085                           = &0085
-l0086                           = &0086
-l0087                           = &0087
-l0088                           = &0088
-l0089                           = &0089
-l008a                           = &008a
-l008b                           = &008b
-l008c                           = &008c
+l0080                           = zp + &00
+l0081                           = zp + &01
+l0082                           = zp + &02
+l0083                           = zp + &03
+l0084                           = zp + &04
+l0085                           = zp + &05
+l0086                           = zp + &06
+l0087                           = zp + &07
+l0088                           = zp + &08
+l0089                           = zp + &09
+l008a                           = zp + &0a
+l008b                           = zp + &0b
+l008c                           = zp + &0c
 l00c0                           = &00c0
 l00c1                           = &00c1
 l00c3                           = &00c3
@@ -73,9 +77,20 @@ kern_rts                        = &ff37
 OSCRLF                          = &ffed
 OSWRCH                          = &fff4
 
-    org &a000
-
+if INCLUDE_ATM_HDR
+    org &a000 - 22
 .pydis_start
+    equs "screen"
+
+    org $a000 - 6
+    equw &a000
+    equw jump_block
+    equw &1000
+else
+.pydis_start
+    org &a000
+endif
+
     equb &40, &bf
 
 .initialize
@@ -264,7 +279,8 @@ OSWRCH                          = &fff4
     sta rdcvec
     lda #>rdch
     sta rdcvec+1
-    jmp basic_next_statement
+    rts
+;   jmp basic_next_statement
 
 .rdch
     cld
@@ -385,6 +401,8 @@ OSWRCH                          = &fff4
 .wrch_vdu28b
     php
     pha
+    clc
+    adc #1
     cmp #&19
     bcc ca44d
     lda #&18
@@ -1029,12 +1047,12 @@ OSWRCH                          = &fff4
     equw vdu14_entry
     equb &0f
     equw vdu15_entry
-    equb &11
-    equw vdu17_entry
+;   equb &11
+;   equw vdu17_entry
     equb &12
     equw vdu18_entry
-    equb &13
-    equw vdu19_entry
+;   equb &13
+;   equw vdu19_entry
     equb &14
     equw vdu20_entry
     equb &15
@@ -1162,10 +1180,10 @@ OSWRCH                          = &fff4
     sta l00df
     sta l0087
     sta l00e6
+    sta l0084
     lda #0
     sta l00de
     sta l0089
-    sta l0084
     sta l0085
     lda #<font_ram
     sta l008b
