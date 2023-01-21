@@ -475,13 +475,13 @@ OSWRCH                          = &fff4
     jmp ca5c2
 
 .vdu23_entry
-    lda #<wrch_vdu21a
+    lda #<wrch_vdu23a
     sta wrcvec
-    lda #>wrch_vdu21a
+    lda #>wrch_vdu23a
     sta wrcvec+1
     rts
 
-.wrch_vdu21a
+.wrch_vdu23a
     php
     pha
     stx l00e4
@@ -500,13 +500,13 @@ OSWRCH                          = &fff4
     sta l0083
     lda #0
     sta l0080
-    lda #<wrch_vdu21b
+    lda #<wrch_vdu23b
     sta wrcvec
-    lda #>wrch_vdu21b
+    lda #>wrch_vdu23b
     sta wrcvec+1
     jmp ca5cc
 
-.wrch_vdu21b
+.wrch_vdu23b
     php
     pha
     stx l00e4
@@ -1865,9 +1865,9 @@ OSWRCH                          = &fff4
     assert <workspace_rom == &05
     assert <wrch_default == &2e
     assert <wrch_vdu01 == &24
-    assert <wrch_vdu21a == &d6
-    assert <wrch_vdu21b == &02
     assert <wrch_vdu22 == &81
+    assert <wrch_vdu23a == &d6
+    assert <wrch_vdu23b == &02
     assert <wrch_vdu28a == &26
     assert <wrch_vdu28b == &45
     assert <wrch_vdu28c == &6f
@@ -1887,9 +1887,9 @@ OSWRCH                          = &fff4
     assert >workspace_rom == &a0
     assert >wrch_default == &a9
     assert >wrch_vdu01 == &a5
-    assert >wrch_vdu21a == &a4
-    assert >wrch_vdu21b == &a5
     assert >wrch_vdu22 == &a5
+    assert >wrch_vdu23a == &a4
+    assert >wrch_vdu23b == &a5
     assert >wrch_vdu28a == &a4
     assert >wrch_vdu28b == &a4
     assert >wrch_vdu28c == &a4

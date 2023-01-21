@@ -51,13 +51,13 @@ def add_screenrom_common():
     expr(0xa493, "<wrch_vdu28d")
     expr(0xa498, ">wrch_vdu28d")
 
-    entry(0xa4d6, "wrch_vdu21a")
-    expr(0xa4cc, "<wrch_vdu21a")
-    expr(0xa4d1, ">wrch_vdu21a")
+    entry(0xa4d6, "wrch_vdu23a")
+    expr(0xa4cc, "<wrch_vdu23a")
+    expr(0xa4d1, ">wrch_vdu23a")
 
-    entry(0xa502, "wrch_vdu21b")
-    expr(0xa4f6, "<wrch_vdu21b")
-    expr(0xa4fb, ">wrch_vdu21b")
+    entry(0xa502, "wrch_vdu23b")
+    expr(0xa4f6, "<wrch_vdu23b")
+    expr(0xa4fb, ">wrch_vdu23b")
 
     entry(0xa524, "wrch_vdu01")
     expr(0xa51a, "<wrch_vdu01")
