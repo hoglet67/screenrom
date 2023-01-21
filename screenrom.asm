@@ -493,13 +493,13 @@ endif
     jmp ca5c2
 
 .vdu23_entry
-    lda #<wrch_vdu21a
+    lda #<wrch_vdu23a
     sta wrcvec
-    lda #>wrch_vdu21a
+    lda #>wrch_vdu23a
     sta wrcvec+1
     rts
 
-.wrch_vdu21a
+.wrch_vdu23a
     php
     pha
     stx l00e4
@@ -518,13 +518,13 @@ endif
     sta l0083
     lda #0
     sta l0080
-    lda #<wrch_vdu21b
+    lda #<wrch_vdu23b
     sta wrcvec
-    lda #>wrch_vdu21b
+    lda #>wrch_vdu23b
     sta wrcvec+1
     jmp ca5cc
 
-.wrch_vdu21b
+.wrch_vdu23b
     php
     pha
     stx l00e4
@@ -677,8 +677,38 @@ endif
     rts
 
 .vdu17_entry
-    jsr sub_caa4e
-    jmp vdu20_entry
+    lda #<wrch_vdu17a
+    sta wrcvec
+    lda #>wrch_vdu17a
+    sta wrcvec+1
+    rts
+
+.wrch_vdu17a
+{
+    php
+    pha
+    stx l00e4
+    sty l00e5
+    cmp #&80
+    bcs done         ; Ignore background text colour changres
+    and #&07
+    beq black_text
+.white_text          ; white text on black bachround
+    lda font_ram     ; test the space character
+    beq done
+    bne invert
+.black_text          ; black text on white background
+    lda font_ram     ; test the space character
+    bne done
+.invert
+    jsr vdu20_entry
+.done
+    jmp ca5c2
+}
+
+;.vdu17_entry
+;    jsr sub_caa4e
+;    jmp vdu20_entry
 
 .vdu18_entry
     jsr sub_caa08
@@ -1047,8 +1077,8 @@ endif
     equw vdu14_entry
     equb &0f
     equw vdu15_entry
-;   equb &11
-;   equw vdu17_entry
+    equb &11
+    equw vdu17_entry
     equb &12
     equw vdu18_entry
 ;   equb &13
